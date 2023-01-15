@@ -8,16 +8,23 @@
                 <div>{{ $project->name }}</div>
                 <div>{{ $project->diff_lvl }}</div>
                 <div>{{ $project->slug }}</div>
-                <div>{{ $project->dev_lang }}</div>
+                @if (count($project->languages))
+                    @foreach ($project->languages as $language)
+                        <div>{{ $language->name }}</div>
+                    @endforeach
+                @endif
                 <div>{{ $project->framework }}</div>
                 <div>{{ $project->team }}</div>
                 <div>{{ $project->git_link }}</div>
                 <div>{{ $project->description }}</div>
-            </div>
-            <div>
-                <button class="btn btn-primary mt-3"><a href="{{ route('admin.projects.index') }}"style="color:white">Indietro</a></button>
+                @if ($project->type)
+                    <div class="fw-bold">Workflow: {{ $project->type->workflow }}</div>
+                @endif
             </div>
         </div>
+    </div>
+    <div>
+        <button class="btn btn-primary mt-3"><a href="{{ route('admin.projects.index') }}"style="color:white">Indietro</a></button>
     </div>
 </div>
 @endsection

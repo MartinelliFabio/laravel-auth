@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Type;
 use App\Models\Project;
-use App\Http\Controllers\Controller;
+use App\Http\Models\Language;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -19,7 +22,7 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
         $types = Type::all();
-        return view('admin.projects.index', compact('projects', 'types'));
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -29,7 +32,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $languages = Language::all();
+        return view('admin.projects.create', compact('types', 'languages'));
     }
 
     /**
@@ -49,6 +53,9 @@ class ProjectController extends Controller
         }
 
         $new_project = Project::create($data);
+        if ($request->has('languages')) {
+            $new_project->languages()->attach($request->languages);
+        }
         return redirect()->route('admin.projects.show', $new_project->slug);
     }
 
@@ -59,7 +66,6 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $types = Type::all();
         return view('admin.projects.show', compact('project'));
     }
 
@@ -71,7 +77,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $languages = Language::all();
+        return view('admin.projects.edit', compact('project', 'types', 'languages'));
     }
 
     /**
@@ -94,6 +101,7 @@ class ProjectController extends Controller
             $path = Storage::disk('public')->put('project_images', $request->cover_image);
             $data['cover_image'] = $path;
         }
+        $project->languages()->sync($request->languages);
         $project->update($data);
         return redirect()->route('admin.projects.index')->with('message', " $edit updated successfully");
     }

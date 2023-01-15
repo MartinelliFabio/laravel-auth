@@ -30,16 +30,20 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td><a href="{{ route('admin.projects.show', $project->slug) }}" title="View Post">{{ $project->name }}</a></td>
                     <td>{{ Str::limit($project->description, 100) }}</td>
-                    <td>{{ $project->dev_lang }}</td>
+                    @if (count($project->languages))
+                        @foreach ($project->languages as $language)
+                            <td>{{ $language->name }}</td>
+                        @endforeach
+                    @endif
                     <td>{{ $project->framework }}</td>
                     <td>{{ $project->team }}</td>
-                    <td>{{ $project->link_git }}</td>
+                    <td>{{ $project->git_link }}</td>
                     <td>{{ $project->diff_lvl }}</td>
-                    @foreach ($types as $type)
-                        @if ($type->id === $project->workflow_id)
-                            <td>{{ $type->workflow }}</td>
-                        @endif
-                    @endforeach
+                    @if ($project->type)
+                        <td>{{ $project->type->workflow }}</td>
+                    @else
+                        <td>//</td>
+                    @endif
                     <td>
                         <a class="link-secondary" href="{{ route('admin.projects.edit', $project->slug) }}" title="Edit Post"><i class="pt-2 fa-solid fa-pen"></i></a>
                     </td>

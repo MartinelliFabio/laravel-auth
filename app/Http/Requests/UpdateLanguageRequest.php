@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreLanguageRequest extends FormRequest
+class UpdateLanguageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +25,10 @@ class StoreLanguageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:languages|max:50'
+            'name' => ['required', Rule::unique('languages')->ignore($this->language), 'max:50']
         ];
     }
+
     public function messages()
     {
         return [

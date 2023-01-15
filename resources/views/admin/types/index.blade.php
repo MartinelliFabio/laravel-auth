@@ -12,8 +12,8 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Name Type</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Workflow</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -22,16 +22,13 @@
                 @foreach ($types as $type)
                     <tr>
                         <th scope="row">{{ $type->id }}</th>
-                        <td><a href="{{ route('admin.types.show', $type->slug) }}"
-                                title="View Post">{{ $type->workflow }}</a></td>
-                        <td><a class="" href="{{ route('admin.types.edit', $type->slug) }}" title="Edit Post"><i
-                                    class="fa-solid fa-pen"></i></a></td>
+                        <td><a href="{{ route('admin.types.show', $type->slug) }}" title="View Post">{{ $type->workflow }}</a></td>
+                        <td><a class="" href="{{ route('admin.types.edit', $type->slug) }}" title="Edit Post"><i class="pt-2 fa-solid fa-pen"></i></a></td>
                         <td>
                             <form action="{{ route('admin.types.destroy', $type->slug) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="delete-button btn btn-danger ms-3"
-                                    data-item-title="{{ $type->workflow }}"><i class="fa-solid fa-trash-can"></i></button>
+                                <button type="submit" class="delete-button btn btn-danger ms-3" data-item-title="{{ $type->workflow }}"><i class="fa-solid fa-trash-can"></i></button>
                             </form>
                         </td>
                     </tr>
