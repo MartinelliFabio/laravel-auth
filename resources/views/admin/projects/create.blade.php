@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('content')
 <h1>Create Project</h1>
     <div class="row">
@@ -29,23 +30,19 @@
                 </div>
                 <div class="mb-3">
                     <label for="framework" class="form-label">Framework</label>
-                    <input type="text" class="form-control @error('framework') is-invalid @enderror" id="framework"
-                        name="framework">
+                    <input type="text" class="form-control @error('framework') is-invalid @enderror" id="framework" name="framework">
                 </div>
                 <div class="mb-3">
                     <label for="diff_lvl" class="form-label">Livello di difficoltà</label>
-                    <input type="text" class="form-control @error('diff_lvl') is-invalid @enderror" id="diff_lvl"
-                        name="diff_lvl">
+                    <input type="text" class="form-control @error('diff_lvl') is-invalid @enderror" id="diff_lvl" name="diff_lvl">
                 </div>
                 <div class="mb-3">
                     <label for="team" class="form-label">Team</label>
-                    <input type="text" class="form-control @error('team') is-invalid @enderror" id="team"
-                        name="team">
+                    <input type="text" class="form-control @error('team') is-invalid @enderror" id="team" name="team">
                 </div>
                 <div class="mb-3">
                     <label for="git_link" class="form-label">Link git</label>
-                    <input type="text" class="form-control @error('git_link') is-invalid @enderror" id="git_link"
-                        name="git_link">
+                    <input type="text" class="form-control @error('git_link') is-invalid @enderror" id="git_link" name="git_link">
                 </div>
                 <!--<div class="mb-3">
                         <label for="cover_image" class="form-label">Immagine</label>
@@ -56,6 +53,9 @@
                     </div>-->
                 <button type="submit" class="btn btn-success">Submit</button>
                 <button type="reset" class="btn btn-primary">Reset</button>
+                <button class="btn btn-primary">
+                    <a href="{{ route('admin.projects.index') }}"style="color:white">Indietro</a>
+                </button>
             </form>
         </div>
     </div>

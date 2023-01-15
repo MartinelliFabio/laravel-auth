@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('content')
 <h1>Projects</h1>
     <a class="btn btn-success" href="{{ route('admin.projects.create') }}">Crea nuovo post</a>
@@ -11,13 +12,14 @@
         <thead>
             <tr>
                 <th scope="col">id</th>
-                <th scope="col">Title</th>
+                <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Languages</th>
                 <th scope="col">Framework</th>
                 <th scope="col">Team</th>
                 <th scope="col">Link Git</th>
                 <th scope="col">Difficulty</th>
+                <th scope="col">Type</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
             </tr>
@@ -33,8 +35,14 @@
                     <td>{{ $project->team }}</td>
                     <td>{{ $project->link_git }}</td>
                     <td>{{ $project->diff_lvl }}</td>
-                    <td><a class="link-secondary" href="{{ route('admin.projects.edit', $project->slug) }}"
-                            title="Edit Post"><i class="pt-2 fa-solid fa-pen"></i></a></td>
+                    @foreach ($types as $type)
+                        @if ($type->id === $project->workflow_id)
+                            <td>{{ $type->workflow }}</td>
+                        @endif
+                    @endforeach
+                    <td>
+                        <a class="link-secondary" href="{{ route('admin.projects.edit', $project->slug) }}" title="Edit Post"><i class="pt-2 fa-solid fa-pen"></i></a>
+                    </td>
                     <td>
                         <form action="{{ route('admin.projects.destroy', $project->slug) }}" method="POST">
                             @csrf
