@@ -1,1 +1,17 @@
 @import '~bootstrap/scss/bootstrap';
+
+div {
+    color: white;
+    margin-top: 10px;
+}
+
+.my-img {
+    width: 300px;
+    border-radius: 10px;
+}
+
+.card-box {
+    background-color: rgb(54, 50, 50);
+    padding: 60px;
+    border-radius: 10px;
+}
