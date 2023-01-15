@@ -33,19 +33,9 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProjectRequest $request)
+    public function store(Request $request)
     {
         //
-        $data = $request->validated();
-        $slug = Project::generateSlug($request->name);
-        $data['slug'] = $slug;
-        if ($request->hasFile('cover_image')) {
-            $path = Storage::disk('public')->put('post_images', $request->cover_image);
-            $data['cover_image'] = $path;
-        }
-
-        $new_post = Project::create($data);
-        return redirect()->route('admin.projects.show', $new_post->slug);
     }
 
     /**
@@ -65,9 +55,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($project)
+    public function edit($id)
     {
-        return view('admin.projects.edit', compact('project'));
+        return view('admin.projects.edit');
     }
 
     /**
@@ -77,22 +67,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(Request $request, $id)
     {
         //
-        $data = $request->validated();
-        $slug = Project::generateSlug($request->name);
-        $data['slug'] = $slug;
-        if ($request->hasFile('cover_image')) {
-            if ($project->cover_image) {
-                Storage::delete($project->cover_image);
-            }
-
-            $path = Storage::disk('public')->put('post_images', $request->cover_image);
-            $data['cover_image'] = $path;
-        }
-        $project->update($data);
-        return redirect()->route('admin.projects.index')->with('message', "$project->title updated successfully");
     }
 
     /**
@@ -101,10 +78,8 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($project)
+    public function destroy($id)
     {
         //
-        $project->delete();
-        return redirect()->route('admin.projects.index')->with('message', "$project->name deleted successfully");
     }
 }
